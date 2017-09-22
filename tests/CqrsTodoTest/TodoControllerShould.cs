@@ -1,16 +1,19 @@
+using CqrsTodo;
+using CqrsTodo.EF;
+using CqrsTodo.Models;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using CqrsTodo;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Newtonsoft.Json;
 using Xunit;
-using CqrsTodo.Models;
-using Microsoft.AspNetCore.SignalR.Client;
-using Microsoft.AspNetCore.TestHost;
 
 namespace CqrsTodoTest
 {
@@ -24,7 +27,8 @@ namespace CqrsTodoTest
         public TodoControllerShould()
         {
             var server = new TestServer(WebHost.CreateDefaultBuilder()
-                .UseStartup<Startup>());
+                .UseStartup<Startup>()
+                .ConfigureServices(s => s.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TestDb"))));
 
             var client = server.CreateClient();
 
@@ -244,6 +248,7 @@ namespace CqrsTodoTest
             var server = WebHost.CreateDefaultBuilder()
                 .UseStartup<Startup>()
                 .UseUrls(url)
+                .ConfigureServices(s => s.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TestDb")))
                 .Build();
 
             Task.Run(() =>

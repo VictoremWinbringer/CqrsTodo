@@ -12,6 +12,9 @@ namespace CqrsTodo.Validators
 
         public TodoValidator(TodoContext context)
         {
+            RuleFor(t => t).NotNull()
+                .WithMessage(string.Format(Properties.Resource.ResourceManager.GetString("IsNullOrEmpty"), nameof(Todo)));
+
             RuleFor(t => t.Description).NotEmpty()
                 .WithMessage(string.Format(Properties.Resource.ResourceManager.GetString("IsNullOrEmpty"), nameof(Todo.Description)));
 
@@ -22,7 +25,7 @@ namespace CqrsTodo.Validators
             RuleFor(t => t.Description).MaximumLength(MAX_DESCRIPTION_LENGTH)
                 .WithMessage(string.Format(Properties.Resource.ResourceManager.GetString("MaxLength"), nameof(Todo.Description), MAX_DESCRIPTION_LENGTH));
 
-            RuleFor(t => t.Description).Must(t => context.Todos.All(todo=>todo.Description!=t))
+            RuleFor(t => t.Description).Must(t => context.Todos.All(todo => todo.Description != t))
                 .WithMessage(string.Format(Properties.Resource.ResourceManager.GetString("NotUnique"), nameof(Todo.Description)));
         }
     }

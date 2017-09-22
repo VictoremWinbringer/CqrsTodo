@@ -1,5 +1,4 @@
-﻿using System;
-using CqrsTodo.EF;
+﻿using CqrsTodo.EF;
 using CqrsTodo.Models;
 using CqrsTodo.SignalR;
 using CqrsTodo.Validators;
@@ -26,8 +25,10 @@ namespace CqrsTodo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection = Configuration.GetConnectionString("DefaultConnection");
+
             services.AddDbContext<TodoContext>(options =>
-                options.UseInMemoryDatabase("TodoDb"));
+                options.UseSqlServer(connection));
 
             services.AddMvc().AddFluentValidation();
             services.AddTransient<IValidator<Todo>, TodoValidator>();
