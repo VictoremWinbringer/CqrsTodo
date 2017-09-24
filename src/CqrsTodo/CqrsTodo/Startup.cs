@@ -1,5 +1,19 @@
-﻿using CqrsTodo.EF;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using CqrsTodo.Command.Concrete;
+using CqrsTodo.Command.Dispatcher.Abstract;
+using CqrsTodo.Command.Dispatcher.Concrete;
+using CqrsTodo.Command.Handler.Abstract;
+using CqrsTodo.Command.Handler.Concrete;
+using CqrsTodo.EF;
 using CqrsTodo.Models;
+using CqrsTodo.Query.Concrete;
+using CqrsTodo.Query.Dispatcher.Abstract;
+using CqrsTodo.Query.Dispatcher.Concrete;
+using CqrsTodo.Query.Handler.Abstract;
+using CqrsTodo.Query.Handler.Concrete;
 using CqrsTodo.SignalR;
 using CqrsTodo.Validators;
 using FluentValidation;
@@ -33,6 +47,13 @@ namespace CqrsTodo
             services.AddMvc().AddFluentValidation();
             services.AddTransient<IValidator<Todo>, TodoValidator>();
             services.AddSignalR();
+
+            services.AddTransient<ICommandDispatcher, CommandDispatcher>();
+            services.AddTransient<IQueryDispatcher, QueryDispatcher>();
+
+            services.AddTransient<ICommandHandler<CreateTodo>, CreateTodoHandler>();
+
+            services.AddTransient<IQueryHandler<GetAllTodo, Task<IEnumerable<Todo>>>, GetAllTodoHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
