@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsTodo", "CqrsTodo\CqrsTodo.csproj", "{61256625-6FCF-4D61-9909-05C01C674451}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsTodo", "src\CqrsTodo\CqrsTodo.csproj", "{61256625-6FCF-4D61-9909-05C01C674451}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{03B6F537-64E9-4EA4-AACF-FB4CC48E4AF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B1E1CB0C-C4D6-4FDE-8F22-A68898D80663}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsTodoTest", "..\..\tests\CqrsTodoTest\CqrsTodoTest.csproj", "{033FF66E-0F53-4E8B-B59F-BB766E0EAB00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CqrsTodoTest", "tests\CqrsTodoTest\CqrsTodoTest.csproj", "{033FF66E-0F53-4E8B-B59F-BB766E0EAB00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

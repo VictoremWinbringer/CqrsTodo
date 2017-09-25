@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\CqrsTodo\CqrsTodo\CqrsTodo.csproj" />
+    <ProjectReference Include="..\..\src\CqrsTodo\CqrsTodo.csproj" />
   </ItemGroup>
 
 </Project>
