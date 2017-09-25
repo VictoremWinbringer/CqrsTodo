@@ -1,6 +1,5 @@
 ﻿using CqrsTodo.Command.Concrete;
 using CqrsTodo.Command.Dispatcher.Abstract;
-using CqrsTodo.EF;
 using CqrsTodo.Filters;
 using CqrsTodo.Models;
 using CqrsTodo.Query.Concrete;
@@ -79,7 +78,7 @@ namespace CqrsTodo.Controllers
         // PUT api/values/5
         [HttpPut("{id}")]
         [ValidateTodoExists]
-        public async Task<IActionResult> Put(Guid id, [FromBody, /*CustomizeValidator(RuleSet = "Update")*/]Todo value)
+        public async Task<IActionResult> Put(Guid id, [FromBody]Todo value)
         {
             await _command.Execute(new UpdateTodo(id, value.Description));
 
