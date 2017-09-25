@@ -1,17 +1,16 @@
-﻿using CqrsTodo.EF;
-using CqrsTodo.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CqrsTodo.Command.Concrete;
+﻿using CqrsTodo.Command.Concrete;
 using CqrsTodo.Command.Dispatcher.Abstract;
+using CqrsTodo.EF;
 using CqrsTodo.Filters;
+using CqrsTodo.Models;
 using CqrsTodo.Query.Concrete;
 using CqrsTodo.Query.Dispatcher.Abstract;
 using CqrsTodo.SignalR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CqrsTodo.Controllers
 {
@@ -19,15 +18,14 @@ namespace CqrsTodo.Controllers
     [Route("api/v1/[controller]")]
     public class ToDoController : Controller
     {
-        private readonly TodoContext _context;
         private readonly IHubContext<Notifier> _notifier;
         private readonly ICommandDispatcher _command;
         private readonly IQueryDispatcher _query;
 
-        public ToDoController(TodoContext context, IHubContext<Notifier> notifier
-            , ICommandDispatcher command, IQueryDispatcher query)
+        public ToDoController(IHubContext<Notifier> notifier
+            , ICommandDispatcher command
+            , IQueryDispatcher query)
         {
-            _context = context;
             _notifier = notifier;
             _command = command;
             _query = query;
@@ -41,70 +39,57 @@ namespace CqrsTodo.Controllers
 
         [HttpGet("{id}")]
         [ValidateTodoExists]
-        public IActionResult Get(Guid id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            return Ok(_context.Todos.Find(id));
+            return Ok(await _query.Execute<GetTodoById, Task<Todo>>(new GetTodoById(id)));
         }
 
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Todo value)
         {
-            var command = new CreateTodo(Guid.NewGuid(), value.Description);
+            value.Id = Guid.NewGuid();
 
-            value.Id = command.Id;
+            var command = new CreateTodo(value.Id, value.Description);
 
             await _command.Execute(command);
 
-            return Ok(value);
+            return Ok(await _query.Execute<GetTodoById, Task<Todo>>(new GetTodoById(value.Id)));
         }
 
         [HttpPost("{id}/[action]")]
         [ValidateTodoExists]
-        public IActionResult MakeComplete(Guid id)
+        public async Task<IActionResult> MakeComplete(Guid id)
         {
-            var todo = _context.Todos.Find(id);
+            await _command.Execute(new MakeComplete(id));
 
-            todo.IsComplete = true;
+            var todo = await _query.Execute<GetTodoById, Task<Todo>>(new GetTodoById(id));
 
-            _context.SaveChanges();
-
-            _notifier.Clients.All.InvokeAsync("Notify", todo.Description + " is complete");
+            await _notifier.Clients.All.InvokeAsync("Notify", todo.Description + " is complete");
 
             return Ok();
         }
 
         [HttpGet("[action]")]
-        public IActionResult Count()
+        public async Task<IActionResult> Count()
         {
-            return Ok(_context.Todos.Count());
+            return Ok(await _query.Execute<GetTodoCount, Task<int>>(new GetTodoCount()));
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         [ValidateTodoExists]
-        public IActionResult Put(Guid id, [FromBody, /*CustomizeValidator(RuleSet = "Update")*/]Todo value)
+        public async Task<IActionResult> Put(Guid id, [FromBody, /*CustomizeValidator(RuleSet = "Update")*/]Todo value)
         {
-            var todo = _context.Todos.Find(id);
-
-            todo.Description = value.Description;
-
-            _context.SaveChanges();
+            await _command.Execute(new UpdateTodo(id, value.Description));
 
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var todo = _context.Todos.Find(id);
-
-            if (todo != null)
-            {
-                _context.Todos.Remove(todo);
-
-                _context.SaveChanges();
-            }
+            await _command.Execute(new DeleteTodo(id));
 
             return Ok();
         }

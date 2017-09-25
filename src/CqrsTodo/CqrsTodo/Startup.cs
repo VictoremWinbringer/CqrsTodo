@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CqrsTodo.Command.Concrete;
+﻿using CqrsTodo.Command.Concrete;
 using CqrsTodo.Command.Dispatcher.Abstract;
 using CqrsTodo.Command.Dispatcher.Concrete;
 using CqrsTodo.Command.Handler.Abstract;
@@ -24,6 +20,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CqrsTodo
 {
@@ -52,8 +50,13 @@ namespace CqrsTodo
             services.AddTransient<IQueryDispatcher, QueryDispatcher>();
 
             services.AddTransient<ICommandHandler<CreateTodo>, CreateTodoHandler>();
+            services.AddTransient<ICommandHandler<DeleteTodo>, DeleteTodoHandler>();
+            services.AddTransient<ICommandHandler<UpdateTodo>, UpdateTodoHandler>();
+            services.AddTransient<ICommandHandler<MakeComplete>, MakeCompleteHandler>();
 
             services.AddTransient<IQueryHandler<GetAllTodo, Task<IEnumerable<Todo>>>, GetAllTodoHandler>();
+            services.AddTransient<IQueryHandler<GetTodoById, Task<Todo>>, GetTodoByIdHandler>();
+            services.AddTransient<IQueryHandler<GetTodoCount, Task<int>>, GetTodoCountHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
