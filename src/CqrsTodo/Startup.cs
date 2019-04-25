@@ -1,15 +1,7 @@
 ﻿using CqrsTodo.Command.Concrete;
-using CqrsTodo.Command.Dispatcher.Abstract;
-using CqrsTodo.Command.Dispatcher.Concrete;
-using CqrsTodo.Command.Handler.Abstract;
-using CqrsTodo.Command.Handler.Concrete;
 using CqrsTodo.EF;
 using CqrsTodo.Models;
 using CqrsTodo.Query.Concrete;
-using CqrsTodo.Query.Dispatcher.Abstract;
-using CqrsTodo.Query.Dispatcher.Concrete;
-using CqrsTodo.Query.Handler.Abstract;
-using CqrsTodo.Query.Handler.Concrete;
 using CqrsTodo.SignalR;
 using CqrsTodo.Validators;
 using FluentValidation;
@@ -22,6 +14,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CqrsTodo.Dispatcher;
+using CqrsTodo.Handler;
+using CqrsTodo.Handler.CommandHandlers;
+using CqrsTodo.Handler.QueryHandlers;
 
 namespace CqrsTodo
 {

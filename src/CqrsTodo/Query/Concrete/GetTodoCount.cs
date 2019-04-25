@@ -1,5 +1,4 @@
-﻿using CqrsTodo.Query.Abstract;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace CqrsTodo.Query.Concrete
 {

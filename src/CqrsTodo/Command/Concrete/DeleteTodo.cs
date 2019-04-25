@@ -1,5 +1,4 @@
 ﻿using System;
-using CqrsTodo.Command.Abstract;
 
 namespace CqrsTodo.Command.Concrete
 {

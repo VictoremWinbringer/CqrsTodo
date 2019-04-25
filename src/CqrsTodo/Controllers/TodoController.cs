@@ -1,15 +1,14 @@
 ﻿using CqrsTodo.Command.Concrete;
-using CqrsTodo.Command.Dispatcher.Abstract;
 using CqrsTodo.Filters;
 using CqrsTodo.Models;
 using CqrsTodo.Query.Concrete;
-using CqrsTodo.Query.Dispatcher.Abstract;
 using CqrsTodo.SignalR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CqrsTodo.Dispatcher;
 
 namespace CqrsTodo.Controllers
 {

@@ -1,13 +1,17 @@
-﻿using CqrsTodo.Query.Abstract;
-using CqrsTodo.Query.Dispatcher.Abstract;
-using CqrsTodo.Query.Handler.Abstract;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using CqrsTodo.Exceptions;
+using CqrsTodo.Handler;
+using CqrsTodo.Query;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace CqrsTodo.Query.Dispatcher.Concrete
+namespace CqrsTodo.Dispatcher
 {
+    public interface IQueryDispatcher
+    {
+        TResult Execute<TQuery, TResult>(TQuery query) where TQuery : IQuery<TResult> where TResult : Task;
+    }
+
     internal sealed class QueryDispatcher : IQueryDispatcher
     {
         private readonly IServiceProvider _serviceProvider;
@@ -17,7 +21,7 @@ namespace CqrsTodo.Query.Dispatcher.Concrete
             _serviceProvider = serviceProvider;
         }
 
-        public TResult Execute<TQuery, TResult>(TQuery query) where TQuery : IQuery<TResult> where  TResult:Task
+        public TResult Execute<TQuery, TResult>(TQuery query) where TQuery : IQuery<TResult> where TResult : Task
         {
             if (query == null) throw new ArgumentNullException("query");
 

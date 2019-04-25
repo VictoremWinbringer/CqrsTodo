@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CqrsTodo.Command.Concrete;
-using CqrsTodo.Command.Handler.Abstract;
 using CqrsTodo.EF;
 using CqrsTodo.Models;
 
-namespace CqrsTodo.Command.Handler.Concrete
+namespace CqrsTodo.Handler.CommandHandlers
 {
     internal sealed class CreateTodoHandler : ICommandHandler<CreateTodo>
     {

@@ -1,5 +1,4 @@
 ﻿using CqrsTodo.Models;
-using CqrsTodo.Query.Abstract;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

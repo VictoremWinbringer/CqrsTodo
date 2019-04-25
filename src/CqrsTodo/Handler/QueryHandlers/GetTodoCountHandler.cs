@@ -1,10 +1,9 @@
-﻿using CqrsTodo.EF;
+﻿using System.Threading.Tasks;
+using CqrsTodo.EF;
 using CqrsTodo.Query.Concrete;
-using CqrsTodo.Query.Handler.Abstract;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
-namespace CqrsTodo.Query.Handler.Concrete
+namespace CqrsTodo.Handler.QueryHandlers
 {
     internal sealed class GetTodoCountHandler : IQueryHandler<GetTodoCount, Task<int>>
     {

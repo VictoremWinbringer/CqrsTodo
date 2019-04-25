@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CqrsTodo.Models;
-using CqrsTodo.Query.Abstract;
 
 namespace CqrsTodo.Query.Concrete
 {

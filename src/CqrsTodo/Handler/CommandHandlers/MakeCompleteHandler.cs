@@ -1,9 +1,8 @@
-﻿using CqrsTodo.Command.Concrete;
-using CqrsTodo.Command.Handler.Abstract;
+﻿using System.Threading.Tasks;
+using CqrsTodo.Command.Concrete;
 using CqrsTodo.EF;
-using System.Threading.Tasks;
 
-namespace CqrsTodo.Command.Handler.Concrete
+namespace CqrsTodo.Handler.CommandHandlers
 {
     internal sealed class MakeCompleteHandler : ICommandHandler<MakeComplete>
     {

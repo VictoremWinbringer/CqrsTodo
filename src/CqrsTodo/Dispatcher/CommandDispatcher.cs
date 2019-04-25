@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using CqrsTodo.Command.Abstract;
-using CqrsTodo.Command.Dispatcher.Abstract;
-using CqrsTodo.Command.Handler.Abstract;
+using CqrsTodo.Command;
 using CqrsTodo.Exceptions;
+using CqrsTodo.Handler;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CqrsTodo.Command.Dispatcher.Concrete
+namespace CqrsTodo.Dispatcher
 {
+    public interface ICommandDispatcher
+    {
+        Task Execute<TCommand>(TCommand command) where TCommand : ICommand;
+    }
+    
     internal sealed class CommandDispatcher : ICommandDispatcher
     {
         private readonly IServiceProvider _serviceProvider;

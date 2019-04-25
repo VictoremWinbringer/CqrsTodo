@@ -1,7 +1,7 @@
-﻿using CqrsTodo.Query.Abstract;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using CqrsTodo.Query;
 
-namespace CqrsTodo.Query.Handler.Abstract
+namespace CqrsTodo.Handler
 {
     public interface IQueryHandler<in TQuery, out TResult> where TQuery : IQuery<TResult> where TResult : Task
     {
